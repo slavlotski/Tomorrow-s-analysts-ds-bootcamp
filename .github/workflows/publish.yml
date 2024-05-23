@@ -10,7 +10,7 @@ jobs:
     - name: Deploy Virtual Assistant to Remote server
       uses: dawidd6/action-ansible-playbook@v2
       with:
-        playbook: ansible/playbook.yml
+        playbook: ./ansible/playbook.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
         inventory: |
           [all]
