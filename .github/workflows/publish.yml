@@ -7,6 +7,10 @@ jobs:
   run-ansible-playbook:
     runs-on: ubuntu-latest
     steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
     - name: Deploy Virtual Assistant to Remote server
       uses: dawidd6/action-ansible-playbook@v2
       with:
