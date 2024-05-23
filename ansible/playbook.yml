@@ -18,12 +18,12 @@
         name: "{{ item }}"
         state: present
       loop: "{{ packages }}"
-      when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
+      when: ansible_os_family == "Ubuntu"
 
     - name: Get all secrets from Github
       set_fact:
-        DOCKER_USERNAME: "{{ lookup('env', 'DOCKER_USERNAME') }}"
-        DOCKER_TOKEN: "{{ lookup('env', 'DOCKER_TOKEN') }}"
+        docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+        docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
 
     - name: Log in to Docker hub
       docker_login:
