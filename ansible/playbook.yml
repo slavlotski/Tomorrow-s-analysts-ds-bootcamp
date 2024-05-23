@@ -1,0 +1,32 @@
+- name: ds-bootcamp
+  gather_facts: false
+  hosts: [all]
+  become: yes
+  vars:
+    packages:
+    - vim
+    - docker-ce
+    - docker-ce-cli
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - build-essential
+    - python3
+    - git
+  tasks:
+    - name: Ensure common packages are installed on Debian-based systems
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ common_packages }}"
+      when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
+
+     - name: Get all secrets from Github
+       env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+
+     - name: Log in to Docker hub
+       docker_login:
+        registry_url: "https://index.docker.io/v1/"
+        username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+        password: "{{ lookup('env', 'DOCKER_TOKEN') }}"

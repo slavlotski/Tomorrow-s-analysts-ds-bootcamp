@@ -1,0 +1,18 @@
+name: Deploy virtual assitant to remote server
+on:
+  push:
+    branches:
+      - main
+jobs:
+  run-ansible-playbook:
+    - name: Deploy Virtual Assistant to Remote server
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        playbook: ansible/playbook.yml
+        directory: /home/ds-bootcamp
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        inventory: |
+          [all]
+          ansible_host=164.92.200.40 ansible_user=root
+        options: |
+          --verbose
