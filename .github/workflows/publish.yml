@@ -5,6 +5,8 @@ on:
       - main
 jobs:
   run-ansible-playbook:
+    runs-on: ubuntu-latest
+    steps:
     - name: Deploy Virtual Assistant to Remote server
       uses: dawidd6/action-ansible-playbook@v2
       with:
