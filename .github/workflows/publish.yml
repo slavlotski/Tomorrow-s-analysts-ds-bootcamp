@@ -16,10 +16,9 @@ jobs:
       with:
         playbook: ./ansible/install-packages.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: |
-          164.92.200.40 ansible_user=root
         options: |
           --verbose
+          --inventory .inventory
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
