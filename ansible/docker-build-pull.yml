@@ -20,7 +20,7 @@
     - name: Build the Docker image
       docker_image:
         build:
-          path: ./Dockerfile
+          path: ./
           buildargs:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
