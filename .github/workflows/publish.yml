@@ -37,4 +37,4 @@ jobs:
         inventory: |
           164.92.200.40 ansible_user=root
         options: |
-          --verbose
+          --verbose -vvv
