@@ -6,24 +6,28 @@
     project_dest: "/home/ds-bootcamp/"
     repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
     repo_branch: "main"
-    docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
   tasks:
     - name: Get all secrets from Github
       set_fact:
         docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
         docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
-        telegram_bot_token: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}"
-        openai_api_key: "{{ lookup('env', 'OPENAI_API_KEY') }}"
-
-    - name: Использование секрета
-      debug:
-        msg: "Пароль docker_username - {{ docker_username }}"
 
     - name: Create destination directory if it does not exist
       file:
         path: "{{ project_dest }}"
         state: directory
         mode: '0755'
+
+    - name: Add GitHub secrets to .env file
+      ansible.builtin.lineinfile:
+        path: "{{ project_dest }}.env"
+        line: "{{ item.key }}={{ item.value }}"
+        create: yes
+      loop:
+        - { key: "TELEGRAM_BOT_TOKEN", value: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}" }
+        - { key: "OPENAI_API_KEY", value: "{{ lookup('env', 'OPENAI_API_KEY') }}" }
+      when:
+        - ansible_os_family == "Ubuntu"
 
     - name: Clone GitHub repository
       git:
@@ -38,6 +42,7 @@
           - docker_token is defined and docker_token | length > 0
         fail_msg: "docker_username or docker_token is not set or empty"
         success_msg: "docker_username and docker_token are set and not empty"
+
 
     - name: Log in to Docker hub
       docker_login:
