@@ -18,7 +18,7 @@ jobs:
         key: ${{secrets.SSH_PRIVATE_KEY}}
         options: |
           --verbose
-          --inventory .inventory
+          --inventory ${{ github.workspace }}/ansible/inventory.ini
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
         inventory: |
           164.92.200.40 ansible_user=root
         options: |
-          --verbose -vvv
+          --verbose
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
