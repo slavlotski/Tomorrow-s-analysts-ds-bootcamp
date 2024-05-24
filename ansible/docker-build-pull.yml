@@ -37,7 +37,7 @@
       docker_image:
         build:
           path: "{{ project_dest }}/Dockerfile"
-          buildargs:
+          args:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
         name: "{{ docker_username }}/{{ dockerhub_reponame }}"
