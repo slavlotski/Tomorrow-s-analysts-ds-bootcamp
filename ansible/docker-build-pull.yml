@@ -6,6 +6,7 @@
     project_dest: "/home/ds-bootcamp/"
     repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
     repo_branch: "main"
+    docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
   tasks:
     - name: Get all secrets from Github
       set_fact:
@@ -13,6 +14,10 @@
         docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
         telegram_bot_token: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}"
         openai_api_key: "{{ lookup('env', 'OPENAI_API_KEY') }}"
+
+    - name: Использование секрета
+      debug:
+        msg: "Пароль docker_username - {{ docker_username }}"
 
     - name: Create destination directory if it does not exist
       file:

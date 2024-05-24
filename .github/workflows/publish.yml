@@ -20,6 +20,17 @@ jobs:
           164.92.200.40 ansible_user=root
         options: |
           --verbose
+    name: Show Secret Value
+
+  show-secret:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Show secret value
+        run: echo "The secret value is: ${{ secrets.DOCKER_USERNAME }}"
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
