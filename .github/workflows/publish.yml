@@ -1,4 +1,4 @@
-name: Deploy virtual assitant to remote server
+name: Virtual Assitant CI/CD
 on:
   push:
     branches:
@@ -33,10 +33,9 @@ jobs:
       with:
         playbook: ./ansible/docker-build-pull.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: |
-          164.92.200.40 ansible_user=root
         options: |
           --verbose
+          --inventory ${{ github.workspace }}/ansible/inventory.ini
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -56,10 +55,9 @@ jobs:
       with:
         playbook: ./ansible/deploy-virtual-assistant.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: |
-          164.92.200.40 ansible_user=root
         options: |
           --verbose
+          --inventory ${{ github.workspace }}/ansible/inventory.ini
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
