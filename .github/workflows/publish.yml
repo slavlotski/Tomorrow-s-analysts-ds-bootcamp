@@ -16,7 +16,8 @@ jobs:
       with:
         playbook: ./ansible/install-packages.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: ./ansible/inventory.ini
+        inventory: |
+          164.92.200.40 ansible_user=root
         options: |
           --verbose
 
@@ -33,6 +34,7 @@ jobs:
       with:
         playbook: ./ansible/docker-build-pull.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: ./ansible/inventory.ini
+        inventory: |
+          164.92.200.40 ansible_user=root
         options: |
           --verbose

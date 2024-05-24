@@ -1,6 +1,6 @@
 - name: install packages to remote server
   gather_facts: true
-  hosts: virtual-assistant
+  hosts: all
   become: yes
   vars:
     packages:
