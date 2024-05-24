@@ -2,6 +2,9 @@
   gather_facts: true
   hosts: all
   become: yes
+  vars:
+    repo_url: "https://raw.githubusercontent.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp/main"
+    project_dest: "/home/ds-bootcamp"
   tasks:
     - name: Get all secrets from Github
       set_fact:
@@ -11,24 +14,36 @@
         telegram_bot_token: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}"
         openai_api_key: "{{ lookup('env', 'OPENAI_API_KEY') }}"
 
+    - name: Create destination directory if it does not exist
+      file:
+        path: "{{ project_dest }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy specific directories or files to the destination
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        remote_src: yes
+      loop:
+        - { src: "{{ repo_url }}/config", dest: "{{ repo_dest }}/config" }
+        - { src: "{{ repo_url }}/handlers", dest: "{{ repo_dest }}/handlers" }
+        - { src: "{{ repo_url }}/utils", dest: "{{ repo_dest }}/utils" }
+        - { src: "{{ repo_url }}/app.py", dest: "{{ repo_dest }}/app.py" }
+        - { src: "{{ repo_url }}/requirements.txt", dest: "{{ repo_dest }}/requirements.txt" }
+        - { src: "{{ repo_url }}/Dockerfile", dest: "{{ repo_dest }}/Dockerfile" }
+
+
     - name: Log in to Docker hub
       docker_login:
         registry_url: "https://index.docker.io/v1/"
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
 
-    - name: Check current working directory
-      command: pwd
-      register: result
-
-    - name: Debug current working directory
-      debug:
-        msg: "Current working directory is: {{ result.stdout }}"
-
     - name: Build the Docker image
       docker_image:
         build:
-          path: ./
+          path: "{{ project_dest }}"
           buildargs:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
