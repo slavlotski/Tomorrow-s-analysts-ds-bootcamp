@@ -1,6 +1,6 @@
 - name: docker build and push image
   gather_facts: true
-  hosts: all
+  hosts: virtual-assistant
   become: yes
   tasks:
     - name: Get all secrets from Github

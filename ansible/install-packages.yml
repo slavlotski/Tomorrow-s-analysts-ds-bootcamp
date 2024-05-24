@@ -1,6 +1,6 @@
 - name: install packages to remote server
   gather_facts: true
-  hosts: all
+  hosts: virtual-assistant
   become: yes
   vars:
     packages:
@@ -18,4 +18,4 @@
         name: "{{ item }}"
         state: present
       loop: "{{ packages }}"
-      when: ansible_os_family == "Ubuntu"
+      when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
