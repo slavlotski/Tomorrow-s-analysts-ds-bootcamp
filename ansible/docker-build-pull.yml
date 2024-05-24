@@ -3,7 +3,7 @@
   hosts: all
   become: yes
   vars:
-    project_dest: "/home/ds-bootcamp"
+    project_dest: "/home/ds-bootcamp/"
     repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
     repo_branch: "main"
   tasks:
@@ -33,22 +33,14 @@
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
 
-    - name: Change working directory to project_dest
-      command: chdir={{ project_dest }} bash -c "cd {{ project_dest }} && pwd"
-      register: workdir_check
-
-    - debug:
-        msg: "Current working directory: {{ workdir_check.stdout }}"
-
     - name: Build the Docker image
       docker_image:
         build:
-          path: ./
+          path: "{{ project_dest }}/Dockerfile"
           buildargs:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
         name: "{{ docker_username }}/{{ dockerhub_reponame }}"
         tag: "latest"
+        source: build
         push: no
-      args:
-        chdir: "{{ project_dest }}"
