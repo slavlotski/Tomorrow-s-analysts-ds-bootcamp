@@ -37,7 +37,7 @@ jobs:
         inventory: |
           164.92.200.40 ansible_user=root
         options: |
-          --verbose -vvv
+          --verbose -v
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}

@@ -36,11 +36,11 @@
       docker_image:
         build:
           path: "{{ project_dest }}."
-          args:
+          env:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
         name: colmarijke/tomorrows-analysts-ds-bootcamp
         tag: latest
         source: build
         timeout: 300
-        push: no
+        push: yes
