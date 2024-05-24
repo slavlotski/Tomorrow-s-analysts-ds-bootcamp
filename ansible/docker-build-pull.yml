@@ -3,8 +3,27 @@
   hosts: all
   become: yes
   tasks:
+    - name: Get all secrets from Github
+      set_fact:
+        docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+        docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
+        dockerhub_reponame: "{{ lookup('env', 'DOCKERHUB_REPONAME') }}"
+        telegram_bot_token: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}"
+        openai_api_key: "{{ lookup('env', 'OPENAI_API_KEY') }}"
+
     - name: Log in to Docker hub
       docker_login:
         registry_url: "https://index.docker.io/v1/"
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
+
+    - name: Build the Docker image
+      docker_image:
+        build:
+          path: ./Dockerfile
+          buildargs:
+            TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
+            OPENAI_API_KEY: "{{ openai_api_key }}"
+        name: "{{ docker_username }}/{{ dockerhub_reponame }}"
+        tag: "latest"
+        push: no

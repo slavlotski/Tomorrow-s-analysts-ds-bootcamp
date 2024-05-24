@@ -19,14 +19,3 @@
         state: present
       loop: "{{ packages }}"
       when: ansible_os_family == "Ubuntu"
-
-    - name: Get all secrets from Github
-      set_fact:
-        docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
-        docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
-
-    - name: Log in to Docker hub
-      docker_login:
-        registry_url: "https://index.docker.io/v1/"
-        username: "{{ docker_username }}"
-        password: "{{ docker_token }}"
