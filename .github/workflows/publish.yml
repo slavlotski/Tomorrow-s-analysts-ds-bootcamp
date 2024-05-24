@@ -16,8 +16,7 @@ jobs:
       with:
         playbook: ./ansible/install-packages.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: |
-          [all]
+        inventory: ./ansible/inventory.ini
         options: |
           --verbose
 
@@ -34,7 +33,6 @@ jobs:
       with:
         playbook: ./ansible/docker-build-pull.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
-        inventory: |
-          [all]
+        inventory: ./ansible/inventory.ini
         options: |
           --verbose
