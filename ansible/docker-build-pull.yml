@@ -42,7 +42,6 @@
         fail_msg: "docker_username or docker_token is not set or empty"
         success_msg: "docker_username and docker_token are set and not empty"
 
-
     - name: Log in to Docker hub
       docker_login:
         registry_url: "https://index.docker.io/v1/"

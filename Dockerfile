@@ -2,8 +2,9 @@ FROM python:3.9
 WORKDIR /app
 
 # копируем файл зависимостей и устанавливаем их
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY  ./pyproject.toml ./poetry.lock ./
+RUN poetry config virtualenvs.create false \
+&& poetry install --without dev
 
 # Копируем остальные файлы проекта в контейнер
 COPY config/ ./config/

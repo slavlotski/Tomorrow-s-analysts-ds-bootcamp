@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "virtual-assistant"
+version = "0.1.0"
+description = "virtual assistant for DS News"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+openai = "^1.30.3"
+python-telegram-bot = "^21.2"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
