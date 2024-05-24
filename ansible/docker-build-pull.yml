@@ -3,8 +3,9 @@
   hosts: all
   become: yes
   vars:
-    repo_url: "https://raw.githubusercontent.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp/main"
     project_dest: "/home/ds-bootcamp"
+    repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
+    repo_branch: "main"
   tasks:
     - name: Get all secrets from Github
       set_fact:
@@ -20,19 +21,11 @@
         state: directory
         mode: '0755'
 
-    - name: Copy specific directories or files to the destination
-      copy:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        remote_src: yes
-      loop:
-        - { src: "{{ repo_url }}/config", dest: "{{ project_dest }}/config" }
-        - { src: "{{ repo_url }}/handlers", dest: "{{ project_dest }}/handlers" }
-        - { src: "{{ repo_url }}/utils", dest: "{{ project_dest }}/utils" }
-        - { src: "{{ repo_url }}/app.py", dest: "{{ project_dest }}/app.py" }
-        - { src: "{{ repo_url }}/requirements.txt", dest: "{{ project_dest }}/requirements.txt" }
-        - { src: "{{ repo_url }}/Dockerfile", dest: "{{ project_dest }}/Dockerfile" }
-
+    - name: Clone GitHub repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ project_dest }}"
+        version: "{{ repo_branch }}"
 
     - name: Log in to Docker hub
       docker_login:
