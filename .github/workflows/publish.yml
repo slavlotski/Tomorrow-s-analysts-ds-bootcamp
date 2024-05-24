@@ -1,4 +1,4 @@
-name: Virtual Assitant CI/CD
+name: Virtual Assistant CI/CD
 on:
   push:
     branches:
@@ -34,7 +34,7 @@ jobs:
         playbook: ./ansible/docker-build-pull.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
         options: |
-          --verbose
+          --verbose -vvv
           --inventory ${{ github.workspace }}/ansible/inventory.ini
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -56,7 +56,7 @@ jobs:
         playbook: ./ansible/deploy-virtual-assistant.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
         options: |
-          --verbose
+          --verbose -vvv
           --inventory ${{ github.workspace }}/ansible/inventory.ini
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

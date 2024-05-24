@@ -57,3 +57,4 @@
         source: build
         timeout: 300
         push: yes
+        state: present
