@@ -23,6 +23,7 @@ jobs:
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
+    needs: install-packages-to-remote-server
     steps:
 
     - name: Checkout repository
