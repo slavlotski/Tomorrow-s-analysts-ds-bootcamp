@@ -56,5 +56,12 @@
         tag: latest
         source: build
         timeout: 300
+        push: no
+
+    - name: Push the Docker image
+      docker_image:
+        name: "{{ image_name }}"
+        tag: latest
+        timeout: 300
         push: yes
-        state: present
+        source: local

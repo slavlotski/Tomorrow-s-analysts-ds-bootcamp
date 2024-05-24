@@ -27,6 +27,7 @@
         name: "{{ image_name }}"
         tag: "latest"
         state: absent
+        force_absent: yes
 
     - name: Pull Docker image
       docker_image:
