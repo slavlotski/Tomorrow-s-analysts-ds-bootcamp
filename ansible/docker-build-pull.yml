@@ -26,12 +26,12 @@
         dest: "{{ item.dest }}"
         remote_src: yes
       loop:
-        - { src: "{{ repo_url }}/config", dest: "{{ repo_dest }}/config" }
-        - { src: "{{ repo_url }}/handlers", dest: "{{ repo_dest }}/handlers" }
-        - { src: "{{ repo_url }}/utils", dest: "{{ repo_dest }}/utils" }
-        - { src: "{{ repo_url }}/app.py", dest: "{{ repo_dest }}/app.py" }
-        - { src: "{{ repo_url }}/requirements.txt", dest: "{{ repo_dest }}/requirements.txt" }
-        - { src: "{{ repo_url }}/Dockerfile", dest: "{{ repo_dest }}/Dockerfile" }
+        - { src: "{{ repo_url }}/config", dest: "{{ project_dest }}/config" }
+        - { src: "{{ repo_url }}/handlers", dest: "{{ project_dest }}/handlers" }
+        - { src: "{{ repo_url }}/utils", dest: "{{ project_dest }}/utils" }
+        - { src: "{{ repo_url }}/app.py", dest: "{{ project_dest }}/app.py" }
+        - { src: "{{ repo_url }}/requirements.txt", dest: "{{ project_dest }}/requirements.txt" }
+        - { src: "{{ repo_url }}/Dockerfile", dest: "{{ project_dest }}/Dockerfile" }
 
 
     - name: Log in to Docker hub
