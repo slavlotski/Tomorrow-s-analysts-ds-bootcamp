@@ -26,8 +26,6 @@
       loop:
         - { key: "TELEGRAM_BOT_TOKEN", value: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}" }
         - { key: "OPENAI_API_KEY", value: "{{ lookup('env', 'OPENAI_API_KEY') }}" }
-      when:
-        - ansible_os_family == "Ubuntu"
 
     - name: Clone GitHub repository
       git:
