@@ -57,7 +57,8 @@
         source: build
         timeout: 300
         push: no
-        force: true
+        state: present
+        force_source: true
 
     - name: Push the Docker image
       docker_image:
