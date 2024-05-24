@@ -36,7 +36,7 @@
     - name: Build the Docker image
       docker_image:
         build:
-          path: "{{ project_dest }}Dockerfile"
+          path: "{{ project_dest }}."
           args:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
