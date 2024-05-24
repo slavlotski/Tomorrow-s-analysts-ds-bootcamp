@@ -6,12 +6,14 @@
     project_dest: "/home/ds-bootcamp/"
     repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
     repo_branch: "main"
-    docker_username: ${{ secrets.DOCKER_USERNAME }}
-    docker_token: ${{ secrets.DOCKER_TOKEN }}
-    telegram_bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-    openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-
   tasks:
+    - name: Get all secrets from Github
+      set_fact:
+        docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+        docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
+        telegram_bot_token: "{{ lookup('env', 'TELEGRAM_BOT_TOKEN') }}"
+        openai_api_key: "{{ lookup('env', 'OPENAI_API_KEY') }}"
+
     - name: Create destination directory if it does not exist
       file:
         path: "{{ project_dest }}"
@@ -23,14 +25,6 @@
         repo: "{{ repo_url }}"
         dest: "{{ project_dest }}"
         version: "{{ repo_branch }}"
-
-    - name: Check if docker_username and docker_token are set
-      assert:
-        that:
-          - docker_username is defined and docker_username | length > 0
-          - docker_token is defined and docker_token | length > 0
-        fail_msg: "docker_username or docker_token is not set or empty"
-        success_msg: "docker_username and docker_token are set and not empty"
 
     - name: Log in to Docker hub
       docker_login:
@@ -49,4 +43,4 @@
         tag: latest
         source: build
         timeout: 300
-        push: yes
+        push: no
