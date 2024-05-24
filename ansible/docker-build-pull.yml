@@ -40,8 +40,8 @@
           args:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
-        name: virtual-assistant-app
+        name: "{{ docker_username }}/{{ dockerhub_reponame }}"
         tag: latest
         source: build
         timeout: 300
-        push: no
+        push: yes
