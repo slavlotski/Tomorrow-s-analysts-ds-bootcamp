@@ -33,13 +33,22 @@
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
 
+    - name: Change working directory to project_dest
+      command: chdir={{ project_dest }} bash -c "cd {{ project_dest }} && pwd"
+      register: workdir_check
+
+    - debug:
+        msg: "Current working directory: {{ workdir_check.stdout }}"
+
     - name: Build the Docker image
       docker_image:
         build:
-          path: "{{ project_dest }}/Dockerfile"
+          path: ./
           buildargs:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
         name: "{{ docker_username }}/{{ dockerhub_reponame }}"
         tag: "latest"
         push: no
+      args:
+        chdir: "{{ project_dest }}"
