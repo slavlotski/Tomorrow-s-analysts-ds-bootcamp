@@ -20,7 +20,6 @@ jobs:
           164.92.200.40 ansible_user=root
         options: |
           --verbose
-    name: Show Secret Value
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
