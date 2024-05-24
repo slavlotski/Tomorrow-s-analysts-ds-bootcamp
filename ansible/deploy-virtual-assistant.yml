@@ -17,16 +17,22 @@
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
 
+    - name: Remove Running Container
+      docker_container:
+        name: virtual-assistant
+        state: absent
+
+    - name: Ensure the Docker image is absent
+      docker_image:
+        name: "{{ image_name }}"
+        tag: "latest"
+        state: absent
+
     - name: Pull Docker image
       docker_image:
         name: "{{ image_name }}"
         tag: "latest"
         source: pull
-
-    - name: Remove Running Container
-      docker_container:
-        name: virtual-assistant
-        state: absent
 
     - name: Run Docker container
       docker_container:
