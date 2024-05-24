@@ -18,6 +18,5 @@ jobs:
         key: ${{secrets.SSH_PRIVATE_KEY}}
         inventory: |
           [all]
-          164.92.200.40 ansible_user=root
         options: |
           --verbose
