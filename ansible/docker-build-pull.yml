@@ -40,7 +40,7 @@
           args:
             TELEGRAM_BOT_TOKEN: "{{ telegram_bot_token }}"
             OPENAI_API_KEY: "{{ openai_api_key }}"
-        name: "{{ docker_username }}/{{ dockerhub_reponame }}"
+        name: colmarijke/tomorrows-analysts-ds-bootcamp
         tag: latest
         source: build
         timeout: 300
