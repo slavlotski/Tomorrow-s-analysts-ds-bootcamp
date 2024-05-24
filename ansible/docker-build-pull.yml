@@ -6,8 +6,9 @@
     project_dest: "/home/ds-bootcamp/"
     repo_url: "https://github.com/slavlotski/Tomorrow-s-analysts-ds-bootcamp.git"
     repo_branch: "main"
+    image_name: "colmarijke/tomorrows-analysts-ds-bootcamp"
   tasks:
-    - name: Get all secrets from Github
+    - name: Get secrets from Github
       set_fact:
         docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
         docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
@@ -52,7 +53,7 @@
       docker_image:
         build:
           path: "{{ project_dest }}."
-        name: colmarijke/tomorrows-analysts-ds-bootcamp
+        name: "{{ image_name }}"
         tag: latest
         source: build
         timeout: 300

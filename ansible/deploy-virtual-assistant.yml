@@ -1,0 +1,36 @@
+- name: Deploy Virtual assistant via Docker
+  gather_facts: true
+  hosts: all
+  become: yes
+  vars:
+    image_name: "colmarijke/tomorrows-analysts-ds-bootcamp:latest"
+    env_file_path: "/home/ds-bootcamp/.env"
+  tasks:
+    - name: Log in to Docker Hub
+      docker_login:
+        registry_url: "https://index.docker.io/v1/"
+        username: "{{ docker_username }}"
+        password: "{{ docker_token }}"
+
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ image_name }}"
+        tag: "latest"
+        source: pull
+
+    - name: Remove Running Container
+      docker_container:
+        name: virtual-assistant
+        state: absent
+
+    - name: Run Docker container
+      docker_container:
+        name: virtual-assistant
+        image: "{{ image_name }}"
+        env_file: "{{ env_file_path }}"
+        state: started
+        debug: yes
+        recreate: yes
+        auto_remove: yes
+        ports:
+          - "80:80"

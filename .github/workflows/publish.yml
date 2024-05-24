@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  install-packages-to-remote-server:
+  install-packages-to-server-stage:
     runs-on: ubuntu-latest
     steps:
 
@@ -23,7 +23,30 @@ jobs:
 
   docker-build-push-stage:
     runs-on: ubuntu-latest
-    needs: install-packages-to-remote-server
+    needs: install-packages-to-server-stage
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Build docker image and push it to docker Hub
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        playbook: ./ansible/docker-build-pull.yml
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        inventory: |
+          164.92.200.40 ansible_user=root
+        options: |
+          --verbose
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+  deploy-virtual-assistant:
+    runs-on: ubuntu-latest
+    needs: docker-build-push-stage
     steps:
 
     - name: Checkout repository
@@ -32,14 +55,12 @@ jobs:
     - name: Deploy Virtual Assistant to Remote server
       uses: dawidd6/action-ansible-playbook@v2
       with:
-        playbook: ./ansible/docker-build-pull.yml
+        playbook: ./ansible/deploy-virtual-assistant.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
         inventory: |
           164.92.200.40 ansible_user=root
         options: |
-          --verbose -v
+          --verbose -vvv
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
