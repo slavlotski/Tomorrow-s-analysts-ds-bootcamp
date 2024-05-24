@@ -1,4 +1,4 @@
-- name: ds-bootcamp
+- name: install packages to remote server
   gather_facts: true
   hosts: all
   become: yes

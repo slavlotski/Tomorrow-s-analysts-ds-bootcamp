@@ -1,0 +1,10 @@
+- name: docker build and push image
+  gather_facts: true
+  hosts: all
+  become: yes
+  tasks:
+    - name: Log in to Docker hub
+      docker_login:
+        registry_url: "https://index.docker.io/v1/"
+        username: "{{ docker_username }}"
+        password: "{{ docker_token }}"

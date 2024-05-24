@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  run-ansible-playbook:
+  install-packages-to-remote-server:
     runs-on: ubuntu-latest
     steps:
 
@@ -14,7 +14,24 @@ jobs:
     - name: Deploy Virtual Assistant to Remote server
       uses: dawidd6/action-ansible-playbook@v2
       with:
-        playbook: ./ansible/playbook.yml
+        playbook: ./ansible/install-packages.yml
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        inventory: |
+          [all]
+        options: |
+          --verbose
+
+  docker-build-push-stage:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy Virtual Assistant to Remote server
+      uses: dawidd6/action-ansible-playbook@v2
+      with:
+        playbook: ./ansible/docker-build-pull.yml
         key: ${{secrets.SSH_PRIVATE_KEY}}
         inventory: |
           [all]
