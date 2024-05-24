@@ -6,6 +6,11 @@
     image_name: "colmarijke/tomorrows-analysts-ds-bootcamp:latest"
     env_file_path: "/home/ds-bootcamp/.env"
   tasks:
+    - name: Get secrets from Github
+      set_fact:
+        docker_username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+        docker_token: "{{ lookup('env', 'DOCKER_TOKEN') }}"
+
     - name: Log in to Docker Hub
       docker_login:
         registry_url: "https://index.docker.io/v1/"
