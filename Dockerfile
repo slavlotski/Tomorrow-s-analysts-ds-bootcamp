@@ -3,8 +3,7 @@ WORKDIR /app
 
 # копируем файл зависимостей и устанавливаем их
 COPY  ./pyproject.toml ./ ./poetry.lock ./
-RUN poetry config virtualenvs.create false \
-&& poetry install --without dev
+RUN poetry install --without dev
 
 # Копируем остальные файлы проекта в контейнер
 COPY config/ ./config/
