@@ -17,6 +17,14 @@
         username: "{{ docker_username }}"
         password: "{{ docker_token }}"
 
+    - name: Check current working directory
+      command: pwd
+      register: result
+
+    - name: Debug current working directory
+      debug:
+        msg: "Current working directory is: {{ result.stdout }}"
+
     - name: Build the Docker image
       docker_image:
         build:
