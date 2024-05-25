@@ -78,6 +78,7 @@ Tomorrow-s-analysts-ds-bootcamp/
 
 **Пакеты python:**
 ```
+Для работы приложения:
 annotated-types==0.7.0
 anyio==4.3.0
 argon2-cffi==23.1.0
@@ -187,6 +188,14 @@ webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.8.0
 widgetsnbextension==4.0.10
+
+Для тестирования:
+requests==2.32.2
+requests-mock==1.12.1
+pytest==8.2.1
+load-dotenv==0.1.0
+only==2020.12.3
+
 ```
 # Деплой приложения через CI/CD
 Сборка и развертывание приложения осуществляется с помощью github actions. Каждый этап описан инструкциями в файле *.github/workflows/publish.yml*. Для обеспечения более тонкой настройки и возможности развертывания приложения на сервер используются ansible playbook'и. Само приложение, все его зависимости и код собираются в docker image и публикуется в публичный docker hub. Для запуска приложения используется docker container.
