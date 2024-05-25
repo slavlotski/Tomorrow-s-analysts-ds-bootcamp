@@ -1,5 +1,6 @@
 # Tomorrow-s-analysts-ds-bootcamp
 ![alt text](ds-bro-avatar.jpg)
+
 [Ссылка на телеграмм-бота](https://t.me/ds_bro_bot)
 # Задача:
 Повысить эффективность работы Data Scientist'а, используя AI Virtual Assistant. Для решения данной задачи был разработан python приложение, где используется telegram бот "DS-Bro" для входной точки в приложение пользователей и продукты OpenAI в качестве основного движка проекта под капотом.
